@@ -1,2 +1,2 @@
 # OneMind
-Team management application suite
+Team management application suite built in .NET
