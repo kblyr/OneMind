@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using OneMind.Data;
 using OneMind.Processes;
 using OneMind.Requests;
+using OneMind.Security;
 
 namespace OneMind.Handlers
 {
@@ -10,11 +11,13 @@ namespace OneMind.Handlers
     {
         readonly IDbContextFactory<OneMindDbContext> _contextFactory;
         readonly InsertUser _insertUser;
+        readonly IUserPasswordCryptoService _passwordCryptoService;
 
-        public SignupUserHandler(IDbContextFactory<OneMindDbContext> contextFactory, InsertUser insertUser)
+        public SignupUserHandler(IDbContextFactory<OneMindDbContext> contextFactory, InsertUser insertUser, IUserPasswordCryptoService passwordCryptoService)
         {
             _contextFactory = contextFactory;
             _insertUser = insertUser;
+            _passwordCryptoService = passwordCryptoService;
         }
 
         public async Task<int> Handle(SignupUserRequest request, CancellationToken cancellationToken)
@@ -27,11 +30,13 @@ namespace OneMind.Handlers
                 new()
                 {
                     Username = request.Username,
-                }
+                    HashedPassword = _passwordCryptoService.ComputeHash(request.Password)
+                },
+                cancellationToken
             );
 
             await transaction.CommitAsync(cancellationToken);
-            return 0;
+            return id;
         }
     }
 }
