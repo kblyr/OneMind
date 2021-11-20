@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>OneMind</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="CodeCompanion.EntityFrameworkCore" Version="1.1.0" />
+        <PackageReference Include="CodeCompanion.Processes" Version="1.1.0" />
+        <PackageReference Include="MediatR" Version="9.0.0" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\OneMind\OneMind.csproj" />
+    </ItemGroup>
+
+	<ItemGroup>
+		<Using Include="CodeCompanion.EntityFrameworkCore" />
+		<Using Include="CodeCompanion.Processes" />
+		<Using Include="MediatR" />
+		<Using Include="Microsoft.EntityFrameworkCore" />
+		<Using Include="Microsoft.EntityFrameworkCore.Metadata.Builders" />
+		<Using Include="OneMind.Data" />
+		<Using Include="OneMind.Data.Entities" />
+		<Using Include="OneMind.Exceptions" />
+		<Using Include="OneMind.Processes" />
+		<Using Include="OneMind.Requests" />
+		<Using Include="OneMind.Security" />
+		<Using Include="OneMind.Utilities" />
+	</ItemGroup>
+
+</Project>
