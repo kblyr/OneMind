@@ -28,6 +28,8 @@
 		<Using Include="OneMind.Exceptions" />
 		<Using Include="OneMind.Processes" />
 		<Using Include="OneMind.Requests" />
+		<Using Include="OneMind.Security" />
+		<Using Include="OneMind.Utilities" />
 	</ItemGroup>
 
 </Project>
