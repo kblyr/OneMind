@@ -1,7 +1,6 @@
-namespace OneMind.Security
+namespace OneMind.Security;
+
+public interface IUserPasswordCryptoService
 {
-    public interface IUserPasswordCryptoService
-    {
-        byte[] ComputeHash(byte[] passwordData);
-    }
+    byte[] ComputeHash(byte[] passwordData);
 }

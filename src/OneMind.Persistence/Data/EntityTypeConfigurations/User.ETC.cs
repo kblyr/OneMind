@@ -1,14 +1,18 @@
+using CodeCompanion.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using OneMind.Data.Entities;
 
-namespace OneMind.Data.EntityTypeConfigurations
+namespace OneMind.Data.EntityTypeConfigurations;
+
+sealed class UserETC : IEntityTypeConfiguration<User>
 {
-    sealed class UserETC : IEntityTypeConfiguration<User>
+    public void Configure(EntityTypeBuilder<User> builder)
     {
-        public void Configure(EntityTypeBuilder<User> builder)
-        {
-            builder.ToTable("User");
-        }
+        builder.ToTable("User")
+            .AsSoftDeletable()
+            .HasInsertFootprint()
+            .HasUpdateFootprint()
+            .HasDeleteFootprint();
     }
 }
