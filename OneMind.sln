@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F58C1E16-4AE2-4C08-AA63-6548131BF605}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneMind", "src\OneMind\OneMind.csproj", "{E9188294-9DFF-47E9-AE98-FE3CEACEE843}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneMind.Persistence", "src\OneMind.Persistence\OneMind.Persistence.csproj", "{4A5332C9-FD1C-4B61-9619-6FEA13744995}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E9188294-9DFF-47E9-AE98-FE3CEACEE843}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9188294-9DFF-47E9-AE98-FE3CEACEE843}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9188294-9DFF-47E9-AE98-FE3CEACEE843}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9188294-9DFF-47E9-AE98-FE3CEACEE843}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A5332C9-FD1C-4B61-9619-6FEA13744995}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A5332C9-FD1C-4B61-9619-6FEA13744995}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A5332C9-FD1C-4B61-9619-6FEA13744995}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A5332C9-FD1C-4B61-9619-6FEA13744995}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E9188294-9DFF-47E9-AE98-FE3CEACEE843} = {F58C1E16-4AE2-4C08-AA63-6548131BF605}
+		{4A5332C9-FD1C-4B61-9619-6FEA13744995} = {F58C1E16-4AE2-4C08-AA63-6548131BF605}
+	EndGlobalSection
+EndGlobal
