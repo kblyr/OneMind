@@ -1,8 +1,3 @@
-using CodeCompanion.EntityFrameworkCore;
-using CodeCompanion.Processes;
-using Microsoft.EntityFrameworkCore;
-using OneMind.Data.Entities;
-
 namespace OneMind.Data;
 
 sealed class OneMindDbContext : CodeCompanionDbContext, IProcessContext

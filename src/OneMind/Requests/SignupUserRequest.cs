@@ -1,5 +1,3 @@
-using MediatR;
-
 namespace OneMind.Requests;
 
 public record SignupUserRequest : IRequest<int>

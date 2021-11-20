@@ -1,7 +1,3 @@
-using System.Text;
-using CodeCompanion.Exceptions;
-using CodeCompanion.FluentEnumerable;
-
 namespace OneMind.Exceptions;
 
 public class UserEmailAddressAlreadyExistsException : CodeCompanionException

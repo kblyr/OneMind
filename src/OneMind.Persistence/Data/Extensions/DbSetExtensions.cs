@@ -1,6 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-using OneMind.Data.Entities;
-
 namespace OneMind.Data;
 
 static class DbSetExtensions

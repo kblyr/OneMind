@@ -7,4 +7,5 @@ record User
     public string EmailAddress { get; init; } = "";
     public string HashedPassword { get; init; } = "";
     public bool IsEmailVerified { get; init; }
+    public bool IsPasswordChangeRequired { get; init; }
 }

@@ -1,9 +1,3 @@
-using CodeCompanion.EntityFrameworkCore;
-using CodeCompanion.Processes;
-using OneMind.Data;
-using OneMind.Data.Entities;
-using OneMind.Exceptions;
-
 namespace OneMind.Processes;
 
 sealed class InsertUser : IAsyncProcess<User, int>

@@ -1,5 +1,3 @@
-using System.Text;
-
 namespace OneMind.Security;
 public static class IUserPasswordCryptoServiceExtensions
 {
