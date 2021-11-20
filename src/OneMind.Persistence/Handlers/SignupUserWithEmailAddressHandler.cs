@@ -43,6 +43,7 @@ sealed class SignupUserWithEmailAddressHandler : IRequestHandler<SignupUserWithE
         {
             var sendUserEmailVerificationRequest = new SendUserEmailVerificationRequest
             {
+                OriginToken = request.OriginToken,
                 Id = id,
                 EmailAddress = request.EmailAddress,
                 WithPassword = true,
