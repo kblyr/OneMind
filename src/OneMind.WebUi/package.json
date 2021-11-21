@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "buildcss": "postcss wwwroot/css/app.css -o wwwroot/css/app.min.css"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
