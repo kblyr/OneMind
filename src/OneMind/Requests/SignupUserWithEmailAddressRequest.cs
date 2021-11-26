@@ -1,6 +1,6 @@
 ﻿namespace OneMind.Requests;
 
-public record SignupUserWithEmailAddressRequest : OriginTokenHolderBase, IRequest<int>
+public record SignupUserWithEmailAddressRequest : IRequest<int>
 {
     public string EmailAddress { get; set; } = "";
 }
