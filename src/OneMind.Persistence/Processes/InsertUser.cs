@@ -7,14 +7,14 @@ sealed class InsertUser : IAsyncProcess<User, int>
         if (processContext is not OneMindDbContext context)
             throw InvalidProcessContextException.Expects<OneMindDbContext>();
 
-        if (await context.Users.UsernameExistsAsync(user.Username, cancellationToken).ConfigureAwait(false))
+        if (await context.Users.UsernameExistsAsync(user.Username, cancellationToken))
             throw new UsernameAlreadyExistsException { Username = user.Username };
 
-        if (await context.Users.EmailAddressExistsAsync(user.EmailAddress, cancellationToken).ConfigureAwait(false))
+        if (await context.Users.EmailAddressExistsAsync(user.EmailAddress, cancellationToken))
             throw new UserEmailAddressAlreadyExistsException { EmailAddress = user.EmailAddress };
 
         context.Users.Add(user, context.CurrentFootprint);
-        await context.TrySaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await context.TrySaveChangesAsync(cancellationToken);
         return user.Id;
     }
 }

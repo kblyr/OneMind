@@ -1,3 +1,5 @@
+using System.Net.WebSockets;
+
 namespace OneMind.Handlers;
 
 sealed class SignupUserHandler : IRequestHandler<SignupUserRequest, int>

@@ -14,14 +14,19 @@ sealed class UserCreatedEventPublisher :
     public async Task<int> Handle(SignupUserRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<int> next)
     {
         var id = await next();
-        await _mediator.Publish(new UserCreatedEvent { Id = id });
+        await PublishAsync(id, cancellationToken);
         return id;
     }
 
     public async Task<int> Handle(SignupUserWithEmailAddressRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<int> next)
     {
         var id = await next();
-        await _mediator.Publish(new UserCreatedEvent { Id = id });
+        await PublishAsync(id, cancellationToken);
         return id;
+    }
+
+    async Task PublishAsync(int id, CancellationToken cancellationToken)
+    {
+        await _mediator.Publish(new UserCreatedEvent { Id = id }, cancellationToken);
     }
 }
