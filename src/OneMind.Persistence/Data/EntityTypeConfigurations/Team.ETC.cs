@@ -20,5 +20,9 @@ sealed class TeamETC : IEntityTypeConfiguration<Team>
         builder.HasOne(team => team.Organization)
             .WithMany()
             .HasForeignKey(team => team.OrganizationId);
+
+        builder.HasOne(team => team.CreaatedBy)
+            .WithMany()
+            .HasForeignKey(team => team.CreatedById);
     }
 }

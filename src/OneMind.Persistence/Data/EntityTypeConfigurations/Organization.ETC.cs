@@ -16,5 +16,9 @@ sealed class OrganizationETC : IEntityTypeConfiguration<Organization>
         builder.HasOne(organization => organization.Leader)
             .WithMany()
             .HasForeignKey(organization => organization.LeaderId);
+
+        builder.HasOne(organization => organization.CreaatedBy)
+            .WithMany()
+            .HasForeignKey(organization => organization.CreatedById);
     }
 }

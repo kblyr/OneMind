@@ -7,4 +7,6 @@ public record CreateTeamRequest : IRequest<int>
     public int LeaderId { get; init; }
     public short Visibility { get; init; }
     public int? OrganizationId { get; init; }
+    public int CreatedById { get; init; }
+    public DateTime CreatedOn { get; init; }
 }
