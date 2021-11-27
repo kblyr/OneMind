@@ -18,6 +18,6 @@ sealed class OrganizationCreatedEventPublisher : IPipelineBehavior<CreateOrganiz
 
     async Task PublishAsync(int id, CancellationToken cancellationToken)
     {
-        await _mediator.Publish(new OrganizationCreatedEvent { Id = id }, cancellationToken);
+        await _mediator.Publish(new OrganizationCreated { Id = id }, cancellationToken);
     }
 }
