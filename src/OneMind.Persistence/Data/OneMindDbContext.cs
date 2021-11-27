@@ -8,4 +8,5 @@ sealed class OneMindDbContext : CodeCompanionDbContext, IProcessContext
 
     public DbSet<User> Users => Set<User>();
     public DbSet<Organization> Organizations => Set<Organization>();
+    public DbSet<Team> Teams => Set<Team>();
 }
