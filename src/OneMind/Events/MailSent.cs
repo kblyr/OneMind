@@ -1,6 +1,6 @@
 ﻿namespace OneMind.Events;
 
-public record MailSentEvent : INotification
+public record MailSent : INotification
 {
     public Guid Id { get; init; }
 }

@@ -1,6 +1,6 @@
 namespace OneMind.Events;
 
-public record UserCreatedEvent : INotification
+public record UserCreated : INotification
 {
     public int Id { get; init; }
 }

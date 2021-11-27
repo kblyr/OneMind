@@ -18,6 +18,6 @@ sealed class TeamCreatedEventPublisher : IPipelineBehavior<CreateTeamRequest, in
 
     async Task PublishAsync(int id, CancellationToken cancellationToken)
     {
-        await _mediator.Publish(new TeamCreatedEvent { Id = id }, cancellationToken);
+        await _mediator.Publish(new TeamCreated { Id = id }, cancellationToken);
     }
 }
