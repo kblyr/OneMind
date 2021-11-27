@@ -16,7 +16,7 @@ sealed class OrganizationCreatedEventPublisher : IPipelineBehavior<CreateOrganiz
         return id;
     }
 
-    private async Task PublishAsync(int id, CancellationToken cancellationToken)
+    async Task PublishAsync(int id, CancellationToken cancellationToken)
     {
         await _mediator.Publish(new OrganizationCreatedEvent { Id = id }, cancellationToken);
     }

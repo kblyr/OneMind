@@ -25,7 +25,7 @@ sealed class UserCreatedEventPublisher :
         return id;
     }
 
-    private async Task PublishAsync(int id, CancellationToken cancellationToken)
+    async Task PublishAsync(int id, CancellationToken cancellationToken)
     {
         await _mediator.Publish(new UserCreatedEvent { Id = id }, cancellationToken);
     }
