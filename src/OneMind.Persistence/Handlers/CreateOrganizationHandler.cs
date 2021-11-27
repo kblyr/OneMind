@@ -29,7 +29,8 @@ sealed class CreateOrganizationHandler : IRequestHandler<CreateOrganizationReque
             Name = request.Name,
             Description = request.Description,
             Leader = leader,
-            LeaderId = leader.Id
+            LeaderId = leader.Id,
+            Visibility = (OrganizationVisibility)request.Visibility,
         },
         cancellationToken
     );

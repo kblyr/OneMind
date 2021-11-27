@@ -11,7 +11,7 @@ sealed class OrganizationETC : IEntityTypeConfiguration<Organization>
             .HasDeleteFootprint();
 
         builder.Property(organization => organization.Visibility)
-            .HasConversion<byte>();
+            .HasConversion<short>();
 
         builder.HasOne(organization => organization.Leader)
             .WithMany()
