@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -6,4 +6,23 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OneMind\OneMind.csproj" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<Using Include="MediatR" />
+		<Using Include="Microsoft.AspNetCore.Mvc" />
+		<Using Include="OneMind" />
+		<Using Include="OneMind.Endpoints" />
+		<Using Include="OneMind.Requests" />
+		<Using Include="OneMind.Schema" />
+		<Using Include="OneMind.Utilities" />
+  </ItemGroup>
 </Project>

@@ -17,8 +17,8 @@ sealed class SignupUserHandler : IRequestHandler<SignupUserRequest, int>
 
     public async Task<int> Handle(SignupUserRequest request, CancellationToken cancellationToken)
     {
-        using var context = await _contextFactory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
-        using var transaction = await context.Database.BeginTransactionAsync(cancellationToken).ConfigureAwait(false);
+        using var context = await _contextFactory.CreateDbContextAsync(cancellationToken);
+        using var transaction = await context.Database.BeginTransactionAsync(cancellationToken);
 
         var id = await _insertUser.ExecuteAsync(
             context.WithHotSave(),
@@ -31,22 +31,20 @@ sealed class SignupUserHandler : IRequestHandler<SignupUserRequest, int>
                 IsPasswordChangeRequired = request.IsPasswordChangeRequired,
             },
             cancellationToken
-        ).ConfigureAwait(false);
+        );
 
         if (id != 0)
         {
             var sendUserEmailVerificationRequest = new SendUserEmailVerificationRequest
             {
                 Id = id,
-                EmailAddress = request.EmailAddress,
-                WithPassword = false,
-                Password = null
+                EmailAddress = request.EmailAddress
             };
 
-            await _mediator.Send(sendUserEmailVerificationRequest, cancellationToken).ConfigureAwait(false);
+            await _mediator.Send(sendUserEmailVerificationRequest, cancellationToken);
         }
 
-        await transaction.CommitAsync(cancellationToken).ConfigureAwait(false);
+        await transaction.CommitAsync(cancellationToken);
         return id;
     }
 }
