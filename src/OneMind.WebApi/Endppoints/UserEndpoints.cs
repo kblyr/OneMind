@@ -9,12 +9,14 @@ static class UserEndpoints
         builder.MapPost("/users/signup", Signup)
             .WithTags("User")
             .Accepts<SignupUserInput>(MediaTypeNames.Application.Json)
-            .Produces<int>(StatusCodes.Status201Created);
+            .Produces<int>(StatusCodes.Status201Created)
+            .ProducesValidationProblem();
 
         builder.MapPost("/users/signup/email", SignupWithEmailAddress)
             .WithTags("User")
             .Accepts<SignupUserWithEmailAddressInput>(MediaTypeNames.Application.Json)
-            .Produces<int>(StatusCodes.Status201Created);
+            .Produces<int>(StatusCodes.Status201Created)
+            .ProducesValidationProblem();
 
         return builder;
     }
