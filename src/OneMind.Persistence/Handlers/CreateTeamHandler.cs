@@ -4,11 +4,13 @@ sealed class CreateTeamHandler : IRequestHandler<CreateTeamRequest, int>
 {
     readonly IDbContextFactory<OneMindDbContext> _contextFactory;
     readonly InsertTeam _insertTeam;
+    readonly IMediator _mediator;
 
-    public CreateTeamHandler(IDbContextFactory<OneMindDbContext> contextFactory, InsertTeam insertTeam)
+    public CreateTeamHandler(IDbContextFactory<OneMindDbContext> contextFactory, InsertTeam insertTeam, IMediator mediator)
     {
         _contextFactory = contextFactory;
         _insertTeam = insertTeam;
+        _mediator = mediator;
     }
 
     public async Task<int> Handle(CreateTeamRequest request, CancellationToken cancellationToken)
@@ -20,6 +22,12 @@ sealed class CreateTeamHandler : IRequestHandler<CreateTeamRequest, int>
         var organization = await context.Organizations.GetAsync(request.OrganizationId ?? 0, cancellationToken);
         var creator = await GetCreatorAsync(context, request, cancellationToken);
         var id = await InsertTeamAsync(context, request, leader, organization, creator, cancellationToken);
+
+        if (id != 0)
+        {
+            await _mediator.Publish(new TeamCreated { Id = id }, cancellationToken);
+        }
+
         await transaction.CommitAsync(cancellationToken);
         return id;
     }

@@ -1,5 +1,3 @@
-using System.Net.WebSockets;
-
 namespace OneMind.Handlers;
 
 sealed class SignupUserHandler : IRequestHandler<SignupUserRequest, int>
@@ -46,6 +44,7 @@ sealed class SignupUserHandler : IRequestHandler<SignupUserRequest, int>
             await _mediator.Send(sendUserEmailVerificationRequest, cancellationToken);
         }
 
+        await _mediator.Publish(new UserCreated { Id = id }, cancellationToken);
         await transaction.CommitAsync(cancellationToken);
         return id;
     }

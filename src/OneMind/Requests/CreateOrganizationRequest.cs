@@ -8,4 +8,5 @@ public record CreateOrganizationRequest : IRequest<int>
     public short Visibility { get; init; }
     public int CreatedById { get; init; }
     public DateTime CreatedOn { get; init; }
+    public IEnumerable<int> InvitedMemberIds { get; init; } = Enumerable.Empty<int>();
 }

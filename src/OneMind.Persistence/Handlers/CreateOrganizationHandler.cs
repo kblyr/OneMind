@@ -4,11 +4,15 @@ sealed class CreateOrganizationHandler : IRequestHandler<CreateOrganizationReque
 {
     readonly IDbContextFactory<OneMindDbContext> _contextFactory;
     readonly InsertOrganization _insertOrganization;
+    readonly InsertOrganizationInvitation _insertInvitation;
+    readonly IMediator _mediator;
 
-    public CreateOrganizationHandler(IDbContextFactory<OneMindDbContext> contextFactory, InsertOrganization insertOrganization)
+    public CreateOrganizationHandler(IDbContextFactory<OneMindDbContext> contextFactory, InsertOrganization insertOrganization, InsertOrganizationInvitation insertInvitation, IMediator mediator)
     {
         _contextFactory = contextFactory;
         _insertOrganization = insertOrganization;
+        _insertInvitation = insertInvitation;
+        _mediator = mediator;
     }
 
     public async Task<int> Handle(CreateOrganizationRequest request, CancellationToken cancellationToken)
@@ -19,6 +23,15 @@ sealed class CreateOrganizationHandler : IRequestHandler<CreateOrganizationReque
         var leader = await GetLeaderAsync(context, request, cancellationToken);
         var creator = await GetCreatorAsync(context, request, cancellationToken);
         var id = await InsertOrganizationAsync(context, request, leader, creator, cancellationToken);
+
+        if (id != 0)
+        {
+            await _mediator.Publish(new OrganizationCreated { Id = id }, cancellationToken);
+        }
+
+        var organization = await GetOrganizationAsync(context, id, cancellationToken);
+        await InsertInvitationsAsync(context, organization, leader, request.InvitedMemberIds, cancellationToken);
+
         await transaction.CommitAsync(cancellationToken);
         return id;
     }
@@ -39,7 +52,45 @@ sealed class CreateOrganizationHandler : IRequestHandler<CreateOrganizationReque
         cancellationToken
     );
 
-    static async Task<User> GetLeaderAsync(OneMindDbContext context, CreateOrganizationRequest request, CancellationToken cancellationToken) => await context.Users.GetAsync(request.LeaderId, cancellationToken)
+    async Task InsertInvitationsAsync(OneMindDbContext context, Organization organization, User sender, IEnumerable<int> recipientIds, CancellationToken cancellationToken)
+    {
+        foreach (var recipientId in recipientIds)
+        {
+            var recipient = await GetInvitationRecipientAsync(context, recipientId, cancellationToken);
+            await _insertInvitation.ExecuteAsync(
+                context.WithoutHotSave(),
+                new()
+                {
+                    OrganizationId = organization.Id,
+                    InvitedOn = DateTimeOffset.Now,
+                    SenderId = sender.Id,
+                    RecipientId = recipient.Id,
+                },
+                cancellationToken
+            );
+        }
+    }
+
+    static async Task<Organization> GetOrganizationAsync(OneMindDbContext context, int id, CancellationToken cancellationToken) => await context.Organizations
+        .AsNoTracking()
+        .Where(organization => organization.Id == id)
+        .Select(organization => new Organization
+        {
+            Id = organization.Id,
+            Name = organization.Name,
+        })
+        .SingleOrDefaultAsync(cancellationToken)
+        ?? throw new OrganizationNotFoundException { Id = id };
+
+    static async Task<User> GetLeaderAsync(OneMindDbContext context, CreateOrganizationRequest request, CancellationToken cancellationToken) => await context.Users
+        .AsNoTracking()
+        .Where(user => user.Id == request.LeaderId)
+        .Select(user => new User
+        {
+            Id = user.Id,
+            Username = user.Username,
+        })
+        .SingleOrDefaultAsync(cancellationToken)
         ?? throw new OrganizationLeaderRequiredException
         {
             Organization = new()
@@ -48,7 +99,15 @@ sealed class CreateOrganizationHandler : IRequestHandler<CreateOrganizationReque
             }
         };
 
-    static async Task<User> GetCreatorAsync(OneMindDbContext context, CreateOrganizationRequest request, CancellationToken cancellationToken) => await context.Users.GetAsync(request.CreatedById, cancellationToken)
+    static async Task<User> GetCreatorAsync(OneMindDbContext context, CreateOrganizationRequest request, CancellationToken cancellationToken) => await context.Users
+        .AsNoTracking()
+        .Where(user => user.Id == request.CreatedById)
+        .Select(user => new User
+        {
+            Id = user.Id,
+            Username = user.Username,
+        })
+        .SingleOrDefaultAsync(cancellationToken)
         ?? throw new OrganizationCreatorRequiredException
         {
             Organization = new()
@@ -56,4 +115,15 @@ sealed class CreateOrganizationHandler : IRequestHandler<CreateOrganizationReque
                 Name = request.Name
             }
         };
+
+    static async Task<User> GetInvitationRecipientAsync(OneMindDbContext context, int recipientId, CancellationToken cancellationToken) => await context.Users
+        .AsNoTracking()
+        .Where(user => user.Id == recipientId)
+        .Select(user => new User
+        {
+            Id = user.Id,
+            Username = user.Username,
+        })
+        .SingleOrDefaultAsync(cancellationToken)
+        ?? throw new UserNotFoundException { Id = recipientId };
 }
