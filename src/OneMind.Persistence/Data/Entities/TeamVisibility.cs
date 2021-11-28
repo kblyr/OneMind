@@ -1,6 +1,6 @@
 ﻿namespace OneMind.Data.Entities;
 
-public enum TeamVisibility : short
+enum TeamVisibility : short
 {
     Private = 1,
     Organization = 2,
