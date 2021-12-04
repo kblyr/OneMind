@@ -23,7 +23,7 @@
 		<Using Include="OneMind" />
 		<Using Include="OneMind.Endpoints" />
 		<Using Include="OneMind.Requests" />
-		<Using Include="OneMind.Schema" />
 		<Using Include="OneMind.Utilities" />
+		<Using Include="System.Net.Mime" />
   </ItemGroup>
 </Project>

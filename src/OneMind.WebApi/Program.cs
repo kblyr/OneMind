@@ -5,7 +5,6 @@ builder.Services
     .AddSwaggerGen(options =>
     {
         options.SwaggerDoc("v1", new() { Title = "OneMind", Version = "v1" });
-        options.UseSchemaIds();
     })
     .AddMediatR(typeof(Program));
 
