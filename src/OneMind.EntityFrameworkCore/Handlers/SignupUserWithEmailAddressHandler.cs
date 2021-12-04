@@ -21,7 +21,7 @@ sealed class SignupUserWithEmailAddressHandler : IRequestHandler<SignupUserWithE
 
     public async Task<int> Handle(SignupUserWithEmailAddressRequest request, CancellationToken cancellationToken)
     {
-        using var context = await _contextFactory.CreateDbContextAsync(cancellationToken);
+        using var context = _contextFactory.CreateDbContext();
         using var transaction = await context.Database.BeginTransactionAsync(cancellationToken);
 
         var username = _usernameFromEmailAddressExtractor.Extract(request.EmailAddress);
@@ -36,7 +36,8 @@ sealed class SignupUserWithEmailAddressHandler : IRequestHandler<SignupUserWithE
                 HashedPassword = _passwordCryptoService.ComputeHash(password),
                 IsEmailVerified = false,
                 IsPasswordChangeRequired = false,
-            }
+            },
+            cancellationToken
         );
 
         if (id != 0)

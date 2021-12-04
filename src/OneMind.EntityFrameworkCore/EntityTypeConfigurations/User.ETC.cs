@@ -1,4 +1,4 @@
-namespace OneMind.Data.EntityTypeConfigurations;
+namespace OneMind.EntityTypeConfigurations;
 
 sealed class UserETC : IEntityTypeConfiguration<User>
 {

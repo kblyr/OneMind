@@ -1,4 +1,4 @@
-﻿namespace OneMind.Data.EntityTypeConfigurations;
+﻿namespace OneMind.EntityTypeConfigurations;
 
 sealed class TeamETC : IEntityTypeConfiguration<Team>
 {

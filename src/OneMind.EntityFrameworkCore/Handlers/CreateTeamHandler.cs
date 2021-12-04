@@ -15,7 +15,7 @@ sealed class CreateTeamHandler : IRequestHandler<CreateTeamRequest, int>
 
     public async Task<int> Handle(CreateTeamRequest request, CancellationToken cancellationToken)
     {
-        using var context = await _contextFactory.CreateDbContextAsync(cancellationToken);
+        using var context = _contextFactory.CreateDbContext();
         using var transaction = await context.Database.BeginTransactionAsync(cancellationToken);
 
         var leader = await GetLeaderAsync(context, request, cancellationToken);
