@@ -27,7 +27,6 @@
 		<Using Include="Microsoft.EntityFrameworkCore.Metadata.Builders" />
 		<Using Include="OneMind.Data" />
 		<Using Include="OneMind.Data.Entities" />
-		<Using Include="OneMind.Events" />
 		<Using Include="OneMind.Exceptions" />
 		<Using Include="OneMind.Handlers" />
 		<Using Include="OneMind.Processes" />
