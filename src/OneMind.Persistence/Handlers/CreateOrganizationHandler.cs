@@ -24,11 +24,6 @@ sealed class CreateOrganizationHandler : IRequestHandler<CreateOrganizationReque
         var creator = await GetCreatorAsync(context, request, cancellationToken);
         var id = await InsertOrganizationAsync(context, request, leader, creator, cancellationToken);
 
-        if (id != 0)
-        {
-            await _mediator.Publish(new OrganizationCreated { Id = id }, cancellationToken);
-        }
-
         var organization = await GetOrganizationAsync(context, id, cancellationToken);
         await InsertInvitationsAsync(context, organization, leader, request.InvitedMemberIds, cancellationToken);
 

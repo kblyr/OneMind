@@ -23,11 +23,6 @@ sealed class CreateTeamHandler : IRequestHandler<CreateTeamRequest, int>
         var creator = await GetCreatorAsync(context, request, cancellationToken);
         var id = await InsertTeamAsync(context, request, leader, organization, creator, cancellationToken);
 
-        if (id != 0)
-        {
-            await _mediator.Publish(new TeamCreated { Id = id }, cancellationToken);
-        }
-
         await transaction.CommitAsync(cancellationToken);
         return id;
     }

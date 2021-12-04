@@ -16,7 +16,6 @@
 		<Using Include="CodeCompanion.FluentEnumerable" />
 		<Using Include="MediatR" />
 		<Using Include="MediatR.Pipeline" />
-		<Using Include="OneMind.Events" />
 		<Using Include="OneMind.Requests" />
 		<Using Include="System.Text" />
 	</ItemGroup>
