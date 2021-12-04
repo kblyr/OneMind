@@ -33,18 +33,14 @@ sealed class SignupUserHandler : IRequestHandler<SignupUserRequest, int>
             cancellationToken
         );
 
-        if (id != 0)
+        if (id == 0)
         {
-            var sendUserEmailVerificationRequest = new SendUserEmailVerificationRequest
-            {
-                Id = id,
-                EmailAddress = request.EmailAddress
-            };
-
-            await _mediator.Send(sendUserEmailVerificationRequest, cancellationToken);
+            await _mediator.Publish(new UserCreateFailed { ErrorMessage = "Id is zero" }, cancellationToken);
+            throw new UserCreateFailedException("Id is zero");
         }
 
         await _mediator.Publish(new UserCreated { Id = id }, cancellationToken);
+
         await transaction.CommitAsync(cancellationToken);
         return id;
     }
