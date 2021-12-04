@@ -1,16 +1,22 @@
-﻿namespace OneMind.Endpoints;
+﻿using System.Net.Mime;
+
+namespace OneMind.Endpoints;
 
 static class UserEndpoints
 {
     public static IEndpointRouteBuilder MapUserEndpoints(this IEndpointRouteBuilder builder)
     {
         builder.MapPost("/users/signup", Signup)
-            .Accepts<SignupUserInput>(MimeTypes.Application.Json)
-            .Produces<int>(StatusCodes.Status201Created);
+            .WithTags("User")
+            .Accepts<SignupUserInput>(MediaTypeNames.Application.Json)
+            .Produces<int>(StatusCodes.Status201Created)
+            .ProducesValidationProblem();
 
         builder.MapPost("/users/signup/email", SignupWithEmailAddress)
-            .Accepts<SignupUserWithEmailAddressInput>(MimeTypes.Application.Json)
-            .Produces<int>(StatusCodes.Status201Created);
+            .WithTags("User")
+            .Accepts<SignupUserWithEmailAddressInput>(MediaTypeNames.Application.Json)
+            .Produces<int>(StatusCodes.Status201Created)
+            .ProducesValidationProblem();
 
         return builder;
     }
