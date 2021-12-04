@@ -34,8 +34,15 @@ sealed class SignupUserHandler : IRequestHandler<SignupUserRequest, int>
         );
 
         if (id == 0)
-            throw new UserCreationFailedException("Id is zero");
+            throw new UserCreationFailedException("Failed to sign-up user");
 
+        var sendUserEmailVerificationRequest = new SendUserEmailVerificationRequest
+        {
+            Id = id,
+            EmailAddress = request.EmailAddress
+        };
+
+        await _mediator.Send(sendUserEmailVerificationRequest, cancellationToken);
         await transaction.CommitAsync(cancellationToken);
         return id;
     }
