@@ -17,7 +17,7 @@ sealed class SignupUserHandler : IRequestHandler<SignupUserRequest, int>
 
     public async Task<int> Handle(SignupUserRequest request, CancellationToken cancellationToken)
     {
-        using var context = await _contextFactory.CreateDbContextAsync(cancellationToken);
+        using var context = _contextFactory.CreateDbContext();
         using var transaction = await context.Database.BeginTransactionAsync(cancellationToken);
 
         var id = await _insertUser.ExecuteAsync(
@@ -34,7 +34,7 @@ sealed class SignupUserHandler : IRequestHandler<SignupUserRequest, int>
         );
 
         if (id == 0)
-            throw new UserCreateFailedException("Id is zero");
+            throw new UserCreationFailedException("Id is zero");
 
         await transaction.CommitAsync(cancellationToken);
         return id;

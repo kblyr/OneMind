@@ -1,4 +1,4 @@
-﻿namespace OneMind.Data.Entities;
+﻿namespace OneMind.Entities;
 
 enum TeamVisibility : short
 {

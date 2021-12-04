@@ -17,7 +17,7 @@ sealed class CreateOrganizationHandler : IRequestHandler<CreateOrganizationReque
 
     public async Task<int> Handle(CreateOrganizationRequest request, CancellationToken cancellationToken)
     {
-        using var context = await _contextFactory.CreateDbContextAsync(cancellationToken);
+        using var context = _contextFactory.CreateDbContext();
         using var transaction = await context.Database.BeginTransactionAsync(cancellationToken);
 
         var leader = await GetLeaderAsync(context, request, cancellationToken);
