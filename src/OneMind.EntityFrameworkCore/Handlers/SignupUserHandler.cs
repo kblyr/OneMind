@@ -5,14 +5,12 @@ sealed class SignupUserHandler : IRequestHandler<SignupUserRequest, int>
     readonly IDbContextFactory<OneMindDbContext> _contextFactory;
     readonly InsertUser _insertUser;
     readonly IUserPasswordCryptoService _passwordCryptoService;
-    readonly IMediator _mediator;
 
-    public SignupUserHandler(IDbContextFactory<OneMindDbContext> contextFactory, InsertUser insertUser, IUserPasswordCryptoService passwordCryptoService, IMediator mediator)
+    public SignupUserHandler(IDbContextFactory<OneMindDbContext> contextFactory, InsertUser insertUser, IUserPasswordCryptoService passwordCryptoService)
     {
         _contextFactory = contextFactory;
         _insertUser = insertUser;
         _passwordCryptoService = passwordCryptoService;
-        _mediator = mediator;
     }
 
     public async Task<int> Handle(SignupUserRequest request, CancellationToken cancellationToken)
@@ -36,13 +34,6 @@ sealed class SignupUserHandler : IRequestHandler<SignupUserRequest, int>
         if (id == 0)
             throw new UserCreationFailedException("Failed to sign-up user");
 
-        var sendUserEmailVerificationRequest = new SendUserEmailVerificationRequest
-        {
-            Id = id,
-            EmailAddress = request.EmailAddress
-        };
-
-        await _mediator.Send(sendUserEmailVerificationRequest, cancellationToken);
         await transaction.CommitAsync(cancellationToken);
         return id;
     }
